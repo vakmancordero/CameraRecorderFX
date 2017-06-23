@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.media.*?>
+<?import com.jfoenix.controls.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="786.0" prefWidth="627.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="camerarecorder.RecorderController">
+   <children>
+      <ToolBar layoutX="147.0" layoutY="87.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
+         <items>
+            <JFXButton prefHeight="25.0" prefWidth="86.0" ripplerFill="#ff8c8c" style="-fx-border-color: rgba(0,0,0,0.25); -fx-border-radius: 4;" text="Grabar" />
+            <JFXButton prefHeight="25.0" prefWidth="86.0" ripplerFill="#00b5c1" style="-fx-border-color: rgba(0,0,0,0.25); -fx-border-radius: 4;" text="Parar" />
+            <Separator orientation="VERTICAL" prefHeight="0.0" prefWidth="16.0" />
+            <JFXButton prefHeight="25.0" prefWidth="86.0" ripplerFill="#bfb800" style="-fx-border-color: rgba(0,0,0,0.25); -fx-border-radius: 4;" text="Galería" />
+         </items>
+      </ToolBar>
+      <MenuBar layoutX="121.0" layoutY="204.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="Archivo">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Salir" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Herramientas">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Editar" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Ayuda">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Acerca de" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <AnchorPane layoutX="39.0" layoutY="96.0" prefHeight="312.0" prefWidth="252.0" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="100.0">
+         <children>
+            <TitledPane animated="false" collapsible="false" text="Camera 01 - XHS-W3D" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ImageView fitHeight="198.0" fitWidth="226.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="87.820556640625" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="14.0">
+                           <image>
+                              <Image url="@../../../../1.jpg" />
+                           </image>
+                        </ImageView>
+                        <JFXButton prefHeight="25.0" prefWidth="86.0" ripplerFill="#bfb800" style="-fx-border-color: rgba(0,0,0,0.25); -fx-border-radius: 4; -fx-background-color: #ffffff;" text="Expandir" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </TitledPane>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="412.0" layoutY="96.0" prefHeight="312.0" prefWidth="252.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="100.0">
+         <children>
+            <TitledPane animated="false" collapsible="false" text="Camera 01 - XHS-W3D" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ImageView fitHeight="198.0" fitWidth="226.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="87.820556640625" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="14.0">
+                           <image>
+                              <Image url="@../../../../1.jpg" />
+                           </image>
+                        </ImageView>
+                        <JFXButton prefHeight="25.0" prefWidth="86.0" ripplerFill="#bfb800" style="-fx-border-color: rgba(0,0,0,0.25); -fx-border-radius: 4; -fx-background-color: #ffffff;" text="Expandir" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </TitledPane>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="38.0" layoutY="433.0" prefHeight="312.0" prefWidth="252.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="40.0">
+         <children>
+            <TitledPane animated="false" collapsible="false" text="Camera 01 - XHS-W3D" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ImageView fitHeight="198.0" fitWidth="226.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="87.820556640625" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="14.0">
+                           <image>
+                              <Image url="@../../../../1.jpg" />
+                           </image>
+                        </ImageView>
+                        <JFXButton prefHeight="25.0" prefWidth="86.0" ripplerFill="#bfb800" style="-fx-border-color: rgba(0,0,0,0.25); -fx-border-radius: 4; -fx-background-color: #ffffff;" text="Expandir" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </TitledPane>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="467.0" layoutY="434.0" prefHeight="312.0" prefWidth="252.0" AnchorPane.bottomAnchor="40.0" AnchorPane.rightAnchor="40.0">
+         <children>
+            <TitledPane animated="false" collapsible="false" text="Camera 01 - XHS-W3D" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ImageView fitHeight="198.0" fitWidth="226.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="87.820556640625" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="14.0">
+                           <image>
+                              <Image url="@../../../../1.jpg" />
+                           </image>
+                        </ImageView>
+                        <JFXButton prefHeight="25.0" prefWidth="86.0" ripplerFill="#bfb800" style="-fx-border-color: rgba(0,0,0,0.25); -fx-border-radius: 4; -fx-background-color: #ffffff;" text="Expandir" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </TitledPane>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
