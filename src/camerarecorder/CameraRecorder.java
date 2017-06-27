@@ -6,10 +6,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-/**
- *
- * @author VakSF
- */
 public class CameraRecorder extends Application {
     
     @Override
