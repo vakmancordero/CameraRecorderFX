@@ -1,4 +1,4 @@
-package camerarecorder;
+package camerarecorder.other;
 
 import javafx.application.Application;
 import javafx.embed.swing.SwingNode;

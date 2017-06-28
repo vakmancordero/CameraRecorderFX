@@ -1,4 +1,4 @@
-package camerarecorder;
+package camerarecorder.other;
 
 import java.io.IOException;
 

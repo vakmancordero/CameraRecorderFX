@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.media.*?>
 <?import com.jfoenix.controls.*?>
@@ -10,52 +11,149 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="480.0" prefWidth="426.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="camerarecorder.RecorderController">
-   <children>
-      <ToolBar layoutX="147.0" layoutY="87.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
-         <items>
-            <JFXButton onAction="#initializeWebCam" prefHeight="25.0" prefWidth="86.0" ripplerFill="#ff8c8c" style="-fx-border-color: rgba(0,0,0,0.25); -fx-border-radius: 4;" text="Grabar" />
-            <JFXButton onAction="#stopCamera" prefHeight="25.0" prefWidth="86.0" ripplerFill="#00b5c1" style="-fx-border-color: rgba(0,0,0,0.25); -fx-border-radius: 4;" text="Parar" />
-            <Separator orientation="VERTICAL" prefHeight="0.0" prefWidth="16.0" />
-            <JFXButton prefHeight="25.0" prefWidth="86.0" ripplerFill="#bfb800" style="-fx-border-color: rgba(0,0,0,0.25); -fx-border-radius: 4;" text="Galería" />
-         </items>
-      </ToolBar>
-      <MenuBar layoutX="121.0" layoutY="204.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <menus>
-          <Menu mnemonicParsing="false" text="Archivo">
+<AnchorPane id="AnchorPane" prefHeight="836.0" prefWidth="774.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="camerarecorder.RecorderController">
+    <children>
+        <ToolBar layoutX="147.0" layoutY="87.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
             <items>
-              <MenuItem mnemonicParsing="false" text="Salir" />
+                <JFXButton onAction="#startRecord" prefHeight="25.0" prefWidth="86.0" ripplerFill="#ff8c8c" style="-fx-border-color: rgb(191,55,55); -fx-border-radius: 4;" text="Grabar" textFill="#bf3737">
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font>
+                </JFXButton>
+                <JFXButton onAction="#stopRecord" prefHeight="25.0" prefWidth="86.0" ripplerFill="#00b5c1" style="-fx-border-color: rgb(45,100,181); -fx-border-radius: 4;" text="Parar" textFill="#2d64b5">
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font>
+                </JFXButton>
+                <Separator orientation="VERTICAL" prefHeight="0.0" prefWidth="16.0" />
+                <JFXButton prefHeight="25.0" prefWidth="86.0" ripplerFill="#bfb800" style="-fx-border-color: rgba(0,0,0,0.50); -fx-border-radius: 4;" text="Galería">
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font>
+                </JFXButton>
             </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Herramientas">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Editar" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Ayuda">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Acerca de" />
-            </items>
-          </Menu>
-        </menus>
-      </MenuBar>
-      <AnchorPane layoutX="39.0" layoutY="96.0" prefHeight="345.0" prefWidth="347.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="100.0">
-         <children>
-            <TitledPane animated="false" collapsible="false" text="Camera 01 - XHS-W3D" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <BorderPane fx:id="bpWebCamPaneHolder" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                           <center>
-                              <ImageView fx:id="webcamIV" fitHeight="240.0" fitWidth="320.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
-                           </center>
-                        </BorderPane>
-                        <JFXButton prefHeight="25.0" prefWidth="86.0" ripplerFill="#bfb800" style="-fx-border-color: rgba(0,0,0,0.25); -fx-border-radius: 4; -fx-background-color: #ffffff;" text="Expandir" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-                     </children>
-                  </AnchorPane>
-               </content>
-            </TitledPane>
-         </children>
-      </AnchorPane>
-   </children>
+        </ToolBar>
+        <MenuBar layoutX="121.0" layoutY="204.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <menus>
+                <Menu mnemonicParsing="false" text="Archivo">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Salir" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Herramientas">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Editar" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Ayuda">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Acerca de" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+        <ScrollPane layoutX="141.0" layoutY="206.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="85.0">
+            <content>
+                <VBox spacing="10.0">
+                    <children>
+                        <HBox spacing="10.0">
+                            <children>
+                                <AnchorPane prefHeight="345.0" prefWidth="347.0">
+                                    <children>
+                                        <TitledPane animated="false" collapsible="false" text="Camera 01 - XHS-W3D" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                            <content>
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                    <children>
+                                                        <BorderPane fx:id="bpWebCamPaneHolder211" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                            <center>
+                                                                <ImageView fx:id="webcamIV_0" fitHeight="240.0" fitWidth="320.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
+                                                            </center>
+                                                        </BorderPane>
+                                                        <JFXCheckBox checkedColor="#bf3737" layoutY="288.0" text="Grabar" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" />
+                                                    </children>
+                                                </AnchorPane>
+                                            </content>
+                                            <font>
+                                                <Font name="System Bold" size="12.0" />
+                                            </font>
+                                        </TitledPane>
+                                    </children>
+                                </AnchorPane>
+                                <AnchorPane prefHeight="345.0" prefWidth="347.0">
+                                    <children>
+                                        <TitledPane animated="false" collapsible="false" text="Camera 01 - XHS-W3D" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                            <content>
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                    <children>
+                                                        <BorderPane fx:id="bpWebCamPaneHolder2112" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                            <center>
+                                                                <ImageView fx:id="webcamIV_1" fitHeight="240.0" fitWidth="320.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
+                                                            </center>
+                                                        </BorderPane>
+                                                        <JFXCheckBox checkedColor="#bf3737" layoutY="288.0" text="Grabar" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" />
+                                                    </children>
+                                                </AnchorPane>
+                                            </content>
+                                            <font>
+                                                <Font name="System Bold" size="12.0" />
+                                            </font>
+                                        </TitledPane>
+                                    </children>
+                                </AnchorPane>
+                            </children>
+                        </HBox>
+                        <HBox spacing="10.0">
+                            <children>
+                                <AnchorPane prefHeight="345.0" prefWidth="347.0">
+                                    <children>
+                                        <TitledPane animated="false" collapsible="false" text="Camera 01 - XHS-W3D" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                            <content>
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                    <children>
+                                                        <BorderPane fx:id="bpWebCamPaneHolder2111" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                            <center>
+                                                                <ImageView fx:id="webcamIV_2" fitHeight="240.0" fitWidth="320.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
+                                                            </center>
+                                                        </BorderPane>
+                                                        <JFXCheckBox checkedColor="#bf3737" layoutY="288.0" text="Grabar" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" />
+                                                    </children>
+                                                </AnchorPane>
+                                            </content>
+                                            <font>
+                                                <Font name="System Bold" size="12.0" />
+                                            </font>
+                                        </TitledPane>
+                                    </children>
+                                </AnchorPane>
+                                <AnchorPane prefHeight="345.0" prefWidth="347.0">
+                                    <children>
+                                        <TitledPane animated="false" collapsible="false" text="Camera 01 - XHS-W3D" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                            <content>
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                    <children>
+                                                        <BorderPane fx:id="bpWebCamPaneHolder21121" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                            <center>
+                                                                <ImageView fx:id="webcamIV_3" fitHeight="240.0" fitWidth="320.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
+                                                            </center>
+                                                        </BorderPane>
+                                                        <JFXCheckBox checkedColor="#bf3737" layoutY="288.0" text="Grabar" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" />
+                                                    </children>
+                                                </AnchorPane>
+                                            </content>
+                                            <font>
+                                                <Font name="System Bold" size="12.0" />
+                                            </font>
+                                        </TitledPane>
+                                    </children>
+                                </AnchorPane>
+                            </children>
+                        </HBox>
+                    </children>
+                    <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                    </padding>
+                </VBox>
+            </content>
+        </ScrollPane>
+    </children>
 </AnchorPane>

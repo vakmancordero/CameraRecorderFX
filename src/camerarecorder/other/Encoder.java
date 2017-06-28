@@ -1,4 +1,4 @@
-package camerarecorder;
+package camerarecorder.other;
 
 import com.github.sarxos.webcam.Webcam;
 import com.github.sarxos.webcam.WebcamResolution;

@@ -1,5 +1,7 @@
 package camerarecorder;
 
+import camerarecorder.utils.FilesUtil;
+import camerarecorder.utils.NamingUtil;
 import com.github.sarxos.webcam.Webcam;
 import com.github.sarxos.webcam.WebcamResolution;
 
@@ -31,7 +33,7 @@ public class RecorderController implements Initializable {
     
     
     @FXML
-    private ImageView webcamIV;
+    private ImageView webcamIV_0, webcamIV_1, webcamIV_2, webcamIV_3;
     
     private ObjectProperty<Image> imageProperty = new SimpleObjectProperty<>();
     
@@ -41,13 +43,24 @@ public class RecorderController implements Initializable {
     
     private File file;
     private IMediaWriter writer;
+    private FilesUtil filesUtil;
+    
+    private volatile boolean recording = false;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        this.file = new File("output.mp4");
+        this.filesUtil = new FilesUtil();
         
-        this.writer = ToolFactory.makeWriter(file.getName());
+        this.initializeWebCam();
+        
+    }
+    
+    private void initWriter(String fileName) {
+        
+        this.file = new File(this.filesUtil.getPath() + fileName);
+        
+        this.writer = ToolFactory.makeWriter(this.file.getAbsolutePath());
         
         Dimension size = WebcamResolution.VGA.getSize();
         
@@ -55,7 +68,6 @@ public class RecorderController implements Initializable {
         
     }
     
-    @FXML
     private void initializeWebCam() {
         
         Task<Void> webCamInitializer = new Task<Void>() {
@@ -64,6 +76,7 @@ public class RecorderController implements Initializable {
             protected Void call() throws Exception {
                 
                 if (selWebCam == null) {
+                    
                     selWebCam = Webcam.getWebcams().get(0);
                     
                     Dimension[] nonStandardResolutions = new Dimension[] {
@@ -77,9 +90,12 @@ public class RecorderController implements Initializable {
                     selWebCam.setViewSize(WebcamResolution.VGA.getSize());
                     
                     selWebCam.open();
+                    
                 } else {
+                    
                     selWebCam = Webcam.getWebcams().get(0);
                     selWebCam.open();
+                    
                 }
                 
                 startWebCamStream();
@@ -92,9 +108,7 @@ public class RecorderController implements Initializable {
         new Thread(webCamInitializer).start();
     }
     
-    protected void startWebCamStream() {
-        
-        this.initialize(null, null);
+    private void startWebCamStream() {
         
         this.stopCamera = false;
         
@@ -109,7 +123,9 @@ public class RecorderController implements Initializable {
                     
                     try {
                         
-                        if ((grabbedImage = selWebCam.getImage()) != null) {
+                        grabbedImage = selWebCam.getImage();
+                        
+                        if (grabbedImage != null) {
                             
                             Platform.runLater(() -> {
                                 
@@ -118,13 +134,6 @@ public class RecorderController implements Initializable {
                                 
                             });
                             
-                            BufferedImage image = ConverterFactory.convertToType(grabbedImage, BufferedImage.TYPE_3BYTE_BGR);
-                            IConverter converter = ConverterFactory.createConverter(image, IPixelFormat.Type.YUV420P);
-                            
-                            IVideoPicture frame = converter.toPicture(image, (System.currentTimeMillis() - start) * 1000);
-                            frame.setQuality(0);
-
-                            writer.encodeVideo(0, frame);
                             grabbedImage.flush();
 
                         }
@@ -146,8 +155,71 @@ public class RecorderController implements Initializable {
         thread.setDaemon(true);
         thread.start();
         
-        this.webcamIV.imageProperty().bind(this.imageProperty);
+        this.webcamIV_0.imageProperty().bind(this.imageProperty);
+        this.webcamIV_1.imageProperty().bind(this.imageProperty);
+        this.webcamIV_2.imageProperty().bind(this.imageProperty);
+        this.webcamIV_3.imageProperty().bind(this.imageProperty);
         
+    }
+    
+    private synchronized void record(BufferedImage image, long start) {
+        
+        BufferedImage bufferedImage = ConverterFactory.convertToType(image, BufferedImage.TYPE_3BYTE_BGR);
+        IConverter converter = ConverterFactory.createConverter(bufferedImage, IPixelFormat.Type.YUV420P);
+        
+        IVideoPicture frame = converter.toPicture(bufferedImage, (System.currentTimeMillis() - start) * 1000);
+        frame.setQuality(0);
+        
+        this.writer.encodeVideo(0, frame);
+        
+    }
+    
+    @FXML
+    private void startRecord() {
+        
+        this.initWriter(NamingUtil.getVideoName(".mp4"));
+        
+        this.recording = true;
+        
+        Task<Void> recordTask = new Task<Void>() {
+            
+            @Override
+            protected Void call() throws Exception {
+                
+                long start = System.currentTimeMillis();
+                
+                while (recording) {
+                    
+                    try {
+                        
+                        if (grabbedImage != null) {
+                            
+                            record(grabbedImage, start);
+                            
+                        }
+                        
+                    } catch (Exception ex) {
+                        System.out.println("Error: " + ex.toString());
+                    }
+                    
+                }
+                
+                writer.close();
+                
+                return null;
+            }
+            
+        };
+        
+        Thread thread = new Thread(recordTask);
+        thread.setDaemon(true);
+        thread.start();
+        
+    }
+    
+    @FXML
+    private void stopRecord() {
+        this.recording = false;
     }
     
     @FXML
