@@ -69,7 +69,7 @@
                                                                 <ImageView fx:id="webcamIV_0" fitHeight="240.0" fitWidth="320.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
                                                             </center>
                                                         </BorderPane>
-                                                        <JFXCheckBox checkedColor="#bf3737" layoutY="288.0" text="Grabar" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" />
+                                                        <JFXCheckBox fx:id="checkBox_0" checkedColor="#bf3737" layoutY="288.0" selected="true" text="Grabar" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" />
                                                     </children>
                                                 </AnchorPane>
                                             </content>
@@ -90,7 +90,7 @@
                                                                 <ImageView fx:id="webcamIV_1" fitHeight="240.0" fitWidth="320.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
                                                             </center>
                                                         </BorderPane>
-                                                        <JFXCheckBox checkedColor="#bf3737" layoutY="288.0" text="Grabar" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" />
+                                                        <JFXCheckBox fx:id="checkBox_1" checkedColor="#bf3737" layoutY="288.0" selected="true" text="Grabar" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" />
                                                     </children>
                                                 </AnchorPane>
                                             </content>
@@ -115,7 +115,7 @@
                                                                 <ImageView fx:id="webcamIV_2" fitHeight="240.0" fitWidth="320.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
                                                             </center>
                                                         </BorderPane>
-                                                        <JFXCheckBox checkedColor="#bf3737" layoutY="288.0" text="Grabar" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" />
+                                                        <JFXCheckBox fx:id="checkBox_2" checkedColor="#bf3737" layoutY="288.0" selected="true" text="Grabar" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" />
                                                     </children>
                                                 </AnchorPane>
                                             </content>
@@ -136,7 +136,7 @@
                                                                 <ImageView fx:id="webcamIV_3" fitHeight="240.0" fitWidth="320.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
                                                             </center>
                                                         </BorderPane>
-                                                        <JFXCheckBox checkedColor="#bf3737" layoutY="288.0" text="Grabar" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" />
+                                                        <JFXCheckBox fx:id="checkBox_3" checkedColor="#bf3737" layoutY="288.0" selected="true" text="Grabar" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" />
                                                     </children>
                                                 </AnchorPane>
                                             </content>

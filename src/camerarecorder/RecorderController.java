@@ -1,230 +1,145 @@
 package camerarecorder;
 
-import camerarecorder.utils.FilesUtil;
-import camerarecorder.utils.NamingUtil;
+import camerarecorder.utils.Camera;
 import com.github.sarxos.webcam.Webcam;
-import com.github.sarxos.webcam.WebcamResolution;
-
-import com.xuggle.mediatool.IMediaWriter;
-import com.xuggle.mediatool.ToolFactory;
-import com.xuggle.xuggler.ICodec;
-import com.xuggle.xuggler.IPixelFormat;
-import com.xuggle.xuggler.IVideoPicture;
-import com.xuggle.xuggler.video.ConverterFactory;
-import com.xuggle.xuggler.video.IConverter;
-
-import java.awt.Dimension;
-import java.awt.image.BufferedImage;
-import java.io.File;
+import com.jfoenix.controls.JFXCheckBox;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
-import javafx.application.Platform;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.concurrent.Task;
-import javafx.embed.swing.SwingFXUtils;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class RecorderController implements Initializable {
     
-    
     @FXML
     private ImageView webcamIV_0, webcamIV_1, webcamIV_2, webcamIV_3;
     
-    private ObjectProperty<Image> imageProperty = new SimpleObjectProperty<>();
+    @FXML
+    private JFXCheckBox checkBox_0, checkBox_1, checkBox_2, checkBox_3;
     
-    private Webcam selWebCam;
-    private BufferedImage grabbedImage;
-    private boolean stopCamera = false;
-    
-    private File file;
-    private IMediaWriter writer;
-    private FilesUtil filesUtil;
-    
-    private volatile boolean recording = false;
+    private List<ImageView> imageViews = new ArrayList<>();
+    private List<JFXCheckBox> checkBoxes = new ArrayList<>();
+    private List<CameraContainer> containers = new ArrayList<>();
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        this.filesUtil = new FilesUtil();
+        this.initLists();
         
-        this.initializeWebCam();
+        List<Webcam> webcams = Webcam.getWebcams();
         
-    }
-    
-    private void initWriter(String fileName) {
-        
-        this.file = new File(this.filesUtil.getPath() + fileName);
-        
-        this.writer = ToolFactory.makeWriter(this.file.getAbsolutePath());
-        
-        Dimension size = WebcamResolution.VGA.getSize();
-        
-        this.writer.addVideoStream(0, 0, ICodec.ID.CODEC_ID_MPEG4, size.width, size.height);
-        
-    }
-    
-    private void initializeWebCam() {
-        
-        Task<Void> webCamInitializer = new Task<Void>() {
+        for (int i = 0; i < webcams.size(); i++) {
             
-            @Override
-            protected Void call() throws Exception {
+            if (i < 4) {
                 
-                if (selWebCam == null) {
-                    
-                    selWebCam = Webcam.getWebcams().get(0);
-                    
-                    Dimension[] nonStandardResolutions = new Dimension[] {
-                        WebcamResolution.PAL.getSize(),
-                        WebcamResolution.VGA.getSize(),
-                        new Dimension(2000, 1000),
-                        new Dimension(1000, 500),
-                    };
-                    
-                    selWebCam.setCustomViewSizes(nonStandardResolutions);
-                    selWebCam.setViewSize(WebcamResolution.VGA.getSize());
-                    
-                    selWebCam.open();
-                    
-                } else {
-                    
-                    selWebCam = Webcam.getWebcams().get(0);
-                    selWebCam.open();
-                    
-                }
+                Camera camera = new Camera(webcams.get(i));
                 
-                startWebCamStream();
+                ImageView imageView = imageViews.get(i);
+                JFXCheckBox checkBox = checkBoxes.get(i);
                 
-                return null;
-            }
-            
-        };
-        
-        new Thread(webCamInitializer).start();
-    }
-    
-    private void startWebCamStream() {
-        
-        this.stopCamera = false;
-        
-        Task<Void> task = new Task<Void>() {
-            
-            @Override
-            protected Void call() throws Exception {
+                imageView.imageProperty().bind(camera.imageProperty());
                 
-                long start = System.currentTimeMillis();
+                CameraContainer cameraContainer = new CameraContainer(imageView, checkBox, camera);
                 
-                while (!stopCamera) {
-                    
-                    try {
-                        
-                        grabbedImage = selWebCam.getImage();
-                        
-                        if (grabbedImage != null) {
-                            
-                            Platform.runLater(() -> {
-                                
-                                imageProperty.set(
-                                        SwingFXUtils.toFXImage(grabbedImage, null));
-                                
-                            });
-                            
-                            grabbedImage.flush();
-
-                        }
-                        
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
+                cameraContainer.getCheckBox().selectedProperty().addListener((observable, oldValue, newValue) -> {
+                    if (!newValue) {
+                        cameraContainer.getCamera().stopCamera();
+                    } else {
+                        cameraContainer.getCamera().initializeWebCam();
                     }
-                    
-                }
+                });
                 
-                writer.close();
+                containers.add(cameraContainer);
                 
-                return null;
             }
             
-        };
-        
-        Thread thread = new Thread(task);
-        thread.setDaemon(true);
-        thread.start();
-        
-        this.webcamIV_0.imageProperty().bind(this.imageProperty);
-        this.webcamIV_1.imageProperty().bind(this.imageProperty);
-        this.webcamIV_2.imageProperty().bind(this.imageProperty);
-        this.webcamIV_3.imageProperty().bind(this.imageProperty);
+        }
         
     }
     
-    private synchronized void record(BufferedImage image, long start) {
+    private void initLists() {
         
-        BufferedImage bufferedImage = ConverterFactory.convertToType(image, BufferedImage.TYPE_3BYTE_BGR);
-        IConverter converter = ConverterFactory.createConverter(bufferedImage, IPixelFormat.Type.YUV420P);
+        this.imageViews.addAll(
+                Arrays.asList(
+                        this.webcamIV_0, this.webcamIV_1,
+                        this.webcamIV_2, this.webcamIV_3
+                )
+        );
         
-        IVideoPicture frame = converter.toPicture(bufferedImage, (System.currentTimeMillis() - start) * 1000);
-        frame.setQuality(0);
-        
-        this.writer.encodeVideo(0, frame);
+        this.checkBoxes.addAll(
+                Arrays.asList(
+                        this.checkBox_0, this.checkBox_1,
+                        this.checkBox_2, this.checkBox_3
+                )
+        );
         
     }
     
     @FXML
     private void startRecord() {
         
-        this.initWriter(NamingUtil.getVideoName(".mp4"));
-        
-        this.recording = true;
-        
-        Task<Void> recordTask = new Task<Void>() {
+        for (CameraContainer cameraContainer : containers) {
             
-            @Override
-            protected Void call() throws Exception {
-                
-                long start = System.currentTimeMillis();
-                
-                while (recording) {
-                    
-                    try {
-                        
-                        if (grabbedImage != null) {
-                            
-                            record(grabbedImage, start);
-                            
-                        }
-                        
-                    } catch (Exception ex) {
-                        System.out.println("Error: " + ex.toString());
-                    }
-                    
-                }
-                
-                writer.close();
-                
-                return null;
-            }
+            cameraContainer.getCamera().startRecord();
             
-        };
-        
-        Thread thread = new Thread(recordTask);
-        thread.setDaemon(true);
-        thread.start();
+        }
         
     }
     
     @FXML
     private void stopRecord() {
-        this.recording = false;
+        
+        for (CameraContainer cameraContainer : containers) {
+            
+            cameraContainer.getCamera().stopRecord();
+            
+        }
+        
     }
     
-    @FXML
-    private void stopCamera(ActionEvent event) {
-        this.stopCamera = true;
+    class CameraContainer {
+        
+        private ImageView imageView;
+        private JFXCheckBox checkBox;
+        private Camera camera;
+        
+        CameraContainer() {
+            
+        }
+
+        CameraContainer(ImageView imageView, JFXCheckBox checkBox, Camera camera) {
+            this.imageView = imageView;
+            this.checkBox = checkBox;
+            this.camera = camera;
+        }
+
+        public ImageView getImageView() {
+            return imageView;
+        }
+
+        public void setImageView(ImageView imageView) {
+            this.imageView = imageView;
+        }
+
+        public JFXCheckBox getCheckBox() {
+            return checkBox;
+        }
+
+        public void setCheckBox(JFXCheckBox checkBox) {
+            this.checkBox = checkBox;
+        }
+
+        public Camera getCamera() {
+            return camera;
+        }
+
+        public void setCamera(Camera camera) {
+            this.camera = camera;
+        }
+        
     }
     
 }
