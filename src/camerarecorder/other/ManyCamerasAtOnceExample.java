@@ -25,6 +25,9 @@ public class ManyCamerasAtOnceExample extends JFrame {
             
             webcam.setViewSize(WebcamResolution.VGA.getSize());
             WebcamPanel panel = new WebcamPanel(webcam, false);
+            panel.setFPSDisplayed(true);
+            panel.setDisplayDebugInfo(true);
+            panel.setImageSizeDisplayed(true);
             
             panel.setPreferredSize(new Dimension(640, 480));
             

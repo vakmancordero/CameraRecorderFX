@@ -68,14 +68,14 @@ public class Camera {
             @Override
             protected Void call() throws Exception {
                 
-                Dimension[] nonStandardResolutions = new Dimension[] {
-                    WebcamResolution.PAL.getSize(),
-                    WebcamResolution.VGA.getSize(),
-                    new Dimension(2000, 1000),
-                    new Dimension(1000, 500),
-                };
-                
-                selWebCam.setCustomViewSizes(nonStandardResolutions);
+//                Dimension[] nonStandardResolutions = new Dimension[] {
+//                    WebcamResolution.PAL.getSize(),
+//                    WebcamResolution.VGA.getSize(),
+//                    new Dimension(2000, 1000),
+//                    new Dimension(1000, 500),
+//                };
+//                
+//                selWebCam.setCustomViewSizes(nonStandardResolutions);
                 selWebCam.setViewSize(WebcamResolution.VGA.getSize());
                 
                 selWebCam.open();
