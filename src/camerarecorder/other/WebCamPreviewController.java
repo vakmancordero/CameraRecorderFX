@@ -113,6 +113,7 @@ public class WebCamPreviewController implements Initializable {
                 }
             }
         });
+        
         Platform.runLater(new Runnable() {
             
             @Override

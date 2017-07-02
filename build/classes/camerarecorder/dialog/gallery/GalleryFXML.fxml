@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.cell.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="590.0" prefWidth="967.0" style="-fx-background-color: WHITE;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="camerarecorder.dialog.gallery.GalleryController">
+    <children>
+        <SplitPane dividerPositions="0.6793650793650794" layoutX="178.0" layoutY="120.0" prefHeight="351.0" prefWidth="580.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="35.0">
+            <items>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: WHITE;">
+                    <children>
+                        <TableView fx:id="videoTV" layoutX="-7.0" layoutY="48.0" prefHeight="495.0" prefWidth="639.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="48.0">
+                            <columns>
+                                <TableColumn prefWidth="200.0" text="Nombre">
+                                    <cellValueFactory>
+                                        <PropertyValueFactory property="name" />
+                                    </cellValueFactory>
+                                </TableColumn>
+                                <TableColumn prefWidth="100.0" text="Fecha">
+                                    <cellValueFactory>
+                                        <PropertyValueFactory property="date" />
+                                    </cellValueFactory>
+                                </TableColumn>
+                                <TableColumn prefWidth="100.0" text="Hora">
+                                    <cellValueFactory>
+                                        <PropertyValueFactory property="time" />
+                                    </cellValueFactory>
+                                </TableColumn>
+                                <TableColumn prefWidth="94.0" text="Formato">
+                                    <cellValueFactory>
+                                        <PropertyValueFactory property="format" />
+                                    </cellValueFactory>
+                                </TableColumn>
+                                <TableColumn prefWidth="96.0" fx:id="deleteTC" text="Eliminar" />
+                            </columns>
+                        </TableView>
+                        <Label alignment="CENTER" layoutX="52.0" layoutY="15.0" prefHeight="49.0" prefWidth="639.0" text="--- Tabla de vídeos realizados ---" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <font>
+                                <Font size="22.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </AnchorPane>
+                <AnchorPane minHeight="0.0" minWidth="300.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: white;">
+                    <children>
+                        <ImageView fitHeight="180.0" fitWidth="200.0" layoutX="50.0" layoutY="64.0" pickOnBounds="true" preserveRatio="true">
+                            <effect>
+                                <DropShadow height="20.0" radius="9.5" width="20.0" />
+                            </effect>
+                            <image>
+                                <Image url="@../../../../../../../Pictures/Screenshots/Captura%20de%20pantalla%20(1).png" />
+                            </image>
+                        </ImageView>
+                        <Label alignment="CENTER" layoutX="-195.0" layoutY="160.0" prefHeight="49.0" prefWidth="639.0" text="[ Vista previa ]" textAlignment="CENTER" textFill="#000000a4" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </AnchorPane>
+            </items>
+        </SplitPane>
+        <MenuBar layoutX="64.0" layoutY="23.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <menus>
+                <Menu mnemonicParsing="false" text="Archivo">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Cerrar" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Herramientas">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Visualizar" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Ayuda">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Acerca de" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+    </children>
+</AnchorPane>

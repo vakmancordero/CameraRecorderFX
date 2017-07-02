@@ -11,22 +11,22 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="836.0" prefWidth="774.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="camerarecorder.RecorderController">
+<AnchorPane id="AnchorPane" prefHeight="830.0" prefWidth="766.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="camerarecorder.RecorderController">
     <children>
         <ToolBar layoutX="147.0" layoutY="87.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
             <items>
-                <JFXButton onAction="#startRecord" prefHeight="25.0" prefWidth="86.0" ripplerFill="#ff8c8c" style="-fx-border-color: rgb(191,55,55); -fx-border-radius: 4;" text="Grabar" textFill="#bf3737">
+                <JFXButton fx:id="recordButton" onAction="#startRecord" prefHeight="25.0" prefWidth="86.0" ripplerFill="#ff8c8c" style="-fx-border-color: rgb(191,55,55); -fx-border-radius: 4;" text="Grabar" textFill="#bf3737">
                     <font>
                         <Font name="System Bold" size="12.0" />
                     </font>
                 </JFXButton>
-                <JFXButton onAction="#stopRecord" prefHeight="25.0" prefWidth="86.0" ripplerFill="#00b5c1" style="-fx-border-color: rgb(45,100,181); -fx-border-radius: 4;" text="Parar" textFill="#2d64b5">
+                <JFXButton fx:id="stopButton" onAction="#stopRecord" prefHeight="25.0" prefWidth="86.0" ripplerFill="#00b5c1" style="-fx-border-color: rgb(45,100,181); -fx-border-radius: 4;" text="Parar" textFill="#2d64b5">
                     <font>
                         <Font name="System Bold" size="12.0" />
                     </font>
                 </JFXButton>
                 <Separator orientation="VERTICAL" prefHeight="0.0" prefWidth="16.0" />
-                <JFXButton prefHeight="25.0" prefWidth="86.0" ripplerFill="#bfb800" style="-fx-border-color: rgba(0,0,0,0.50); -fx-border-radius: 4;" text="Galería">
+                <JFXButton fx:id="galleryButton" onAction="#openGallery" prefHeight="25.0" prefWidth="86.0" ripplerFill="#bfb800" style="-fx-border-color: rgba(0,0,0,0.50); -fx-border-radius: 4;" text="Galería">
                     <font>
                         <Font name="System Bold" size="12.0" />
                     </font>
@@ -54,7 +54,7 @@
         </MenuBar>
         <ScrollPane layoutX="141.0" layoutY="206.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="85.0">
             <content>
-                <VBox spacing="10.0">
+                <VBox spacing="10.0" style="-fx-background-color: white;">
                     <children>
                         <HBox spacing="10.0">
                             <children>
@@ -62,14 +62,18 @@
                                     <children>
                                         <TitledPane animated="false" collapsible="false" text="Camera 01 - XHS-W3D" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                             <content>
-                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: white;">
                                                     <children>
                                                         <BorderPane fx:id="borderPane_0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                                            <center>
-                                                                <ImageView fx:id="webcamIV_0" fitHeight="240.0" fitWidth="320.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
-                                                            </center>
+                                             <center>
+                                                <Label text="Cargando..." BorderPane.alignment="CENTER">
+                                                   <font>
+                                                      <Font size="25.0" />
+                                                   </font>
+                                                </Label>
+                                             </center>
                                                         </BorderPane>
-                                                        <JFXCheckBox fx:id="checkBox_0" checkedColor="#bf3737" layoutY="288.0" selected="true" text="Grabar" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" />
+                                                        <JFXCheckBox fx:id="checkBox_0" checkedColor="#3767bd" disable="true" layoutY="288.0" text="Grabar" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" />
                                                     </children>
                                                 </AnchorPane>
                                             </content>
@@ -83,14 +87,18 @@
                                     <children>
                                         <TitledPane animated="false" collapsible="false" text="Camera 01 - XHS-W3D" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                             <content>
-                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: white;">
                                                     <children>
                                                         <BorderPane fx:id="borderPane_1" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                                            <center>
-                                                                <ImageView fx:id="webcamIV_1" fitHeight="240.0" fitWidth="320.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
-                                                            </center>
+                                             <center>
+                                                <Label text="Cargando..." BorderPane.alignment="CENTER">
+                                                   <font>
+                                                      <Font size="25.0" />
+                                                   </font>
+                                                </Label>
+                                             </center>
                                                         </BorderPane>
-                                                        <JFXCheckBox fx:id="checkBox_1" checkedColor="#bf3737" layoutY="288.0" selected="true" text="Grabar" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" />
+                                                        <JFXCheckBox fx:id="checkBox_1" checkedColor="#3767bd" disable="true" layoutY="288.0" text="Grabar" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" />
                                                     </children>
                                                 </AnchorPane>
                                             </content>
@@ -108,14 +116,18 @@
                                     <children>
                                         <TitledPane animated="false" collapsible="false" text="Camera 01 - XHS-W3D" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                             <content>
-                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: white;">
                                                     <children>
                                                         <BorderPane fx:id="borderPane_2" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                                            <center>
-                                                                <ImageView fx:id="webcamIV_2" fitHeight="240.0" fitWidth="320.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
-                                                            </center>
+                                             <center>
+                                                <Label text="Cargando..." BorderPane.alignment="CENTER">
+                                                   <font>
+                                                      <Font size="25.0" />
+                                                   </font>
+                                                </Label>
+                                             </center>
                                                         </BorderPane>
-                                                        <JFXCheckBox fx:id="checkBox_2" checkedColor="#bf3737" layoutY="288.0" selected="true" text="Grabar" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" />
+                                                        <JFXCheckBox fx:id="checkBox_2" checkedColor="#3767bd" disable="true" layoutY="288.0" text="Grabar" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" />
                                                     </children>
                                                 </AnchorPane>
                                             </content>
@@ -129,14 +141,18 @@
                                     <children>
                                         <TitledPane animated="false" collapsible="false" text="Camera 01 - XHS-W3D" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                             <content>
-                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: white;">
                                                     <children>
                                                         <BorderPane fx:id="borderPane_3" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                                            <center>
-                                                                <ImageView fx:id="webcamIV_3" fitHeight="240.0" fitWidth="320.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
-                                                            </center>
+                                             <center>
+                                                <Label text="Cargando..." BorderPane.alignment="CENTER">
+                                                   <font>
+                                                      <Font size="25.0" />
+                                                   </font>
+                                                </Label>
+                                             </center>
                                                         </BorderPane>
-                                                        <JFXCheckBox fx:id="checkBox_3" checkedColor="#bf3737" layoutY="288.0" selected="true" text="Grabar" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" />
+                                                        <JFXCheckBox fx:id="checkBox_3" checkedColor="#3767bd" disable="true" layoutY="288.0" text="Grabar" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" />
                                                     </children>
                                                 </AnchorPane>
                                             </content>

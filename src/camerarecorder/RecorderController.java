@@ -1,21 +1,31 @@
 package camerarecorder;
 
+import camerarecorder.beans.CameraContainer;
+import camerarecorder.dialog.gallery.GalleryController;
 import camerarecorder.utils.Camera;
 import com.github.sarxos.webcam.Webcam;
-import com.github.sarxos.webcam.WebcamPanel;
-import com.github.sarxos.webcam.WebcamResolution;
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
-import java.awt.Dimension;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.embed.swing.SwingNode;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.image.ImageView;
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import javax.swing.SwingUtilities;
 
 public class RecorderController implements Initializable {
@@ -24,15 +34,14 @@ public class RecorderController implements Initializable {
     private BorderPane borderPane_0, borderPane_1, borderPane_2, borderPane_3;
     
     @FXML
-    private ImageView webcamIV_0, webcamIV_1, webcamIV_2, webcamIV_3;
-    
-    @FXML
     private JFXCheckBox checkBox_0, checkBox_1, checkBox_2, checkBox_3;
     
-    private List<ImageView> imageViews = new ArrayList<>();
-    private List<BorderPane> borderPanes = new ArrayList<>();
-    private List<JFXCheckBox> checkBoxes = new ArrayList<>();
-    private List<CameraContainer> containers = new ArrayList<>();
+    @FXML
+    private JFXButton recordButton, stopButton, galleryButton;
+    
+    private final List<BorderPane> borderPanes = new ArrayList<>();
+    private final List<JFXCheckBox> checkBoxes = new ArrayList<>();
+    private final List<CameraContainer> containers = new ArrayList<>();
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -51,51 +60,105 @@ public class RecorderController implements Initializable {
                 
                 final SwingNode swingNode = new SwingNode();
                 
-                WebcamPanel webcamPanel = new WebcamPanel(webcam, false);
+                Camera camera = new Camera(webcam, false);
                 
-                webcamPanel.setFPSDisplayed(true);
-                webcamPanel.setDisplayDebugInfo(true);
-                webcamPanel.setImageSizeDisplayed(true);
-                webcamPanel.setPreferredSize(new Dimension(320, 240));
+                swingNode.setContent(camera);
                 
-                swingNode.setContent(webcamPanel);
+                CameraContainer cameraContainer = new CameraContainer(camera, checkBox);
                 
-                CameraContainer cameraContainer = new CameraContainer(webcamPanel, checkBox);
-                
-                cameraContainer.getCheckBox().selectedProperty().addListener((observable, oldValue, newValue) -> {
-                    if (!newValue) {
-                        cameraContainer.getWebcamPanel().stop();
-                    } else {
-                        cameraContainer.getWebcamPanel().start();
-                    }
-                });
-                
-                this.containers.add(cameraContainer);
-                
-                SwingUtilities.invokeLater(() -> {
-                    
-                    borderPane.setCenter(swingNode);
-                    
-                    webcamPanel.getWebcam().setViewSize(WebcamResolution.VGA.getSize());
-                        
-                    webcamPanel.start();
-                    
-                });
-                
+                this.initWebcam(cameraContainer, borderPane, swingNode, camera);
             }
             
         }
         
+        this.stopButton.setDisable(true);
+        
+    }
+    
+    private void initWebcam(CameraContainer cameraContainer, BorderPane borderPane,  
+            SwingNode swingNode, Camera camera) {
+        
+        final Task<Void> webCamIntilizer = new Task<Void>() {
+            
+            @Override
+            protected Void call() throws Exception {
+                
+                cameraContainer.getCheckBox().setDisable(false);
+                cameraContainer.getCheckBox().setSelected(true);
+                
+                cameraContainer.getCheckBox().selectedProperty().addListener((observable, oldValue, newValue) -> {
+                    
+                    Platform.runLater(() -> {
+                        
+                        if (!newValue) {
+                            
+                            cameraContainer.getCamera().pause();
+                            cameraContainer.getCamera().setVisible(false);
+                            
+                        } else {
+                            
+                            cameraContainer.getCamera().resume();
+                            cameraContainer.getCamera().setVisible(true);
+                            
+                        }
+                    });
+                    
+                    checkCheckboxes();
+                    
+                });
+                
+                containers.add(cameraContainer);
+                   
+                SwingUtilities.invokeLater(() -> {
+                    
+                    Platform.runLater(() -> {
+                        
+                        borderPane.setCenter(swingNode);
+                        
+                        for (BorderPane pane : borderPanes) {
+                            
+                            Node center = pane.getCenter();
+                            
+                            String name = center.getClass().getSimpleName();
+                            
+                            if (name.equals("Label")) {
+                                
+                                Label label = (Label) center;
+                                
+                                label.setText("No encontrado");
+                                
+                            }
+                            
+                        }
+                        
+                        camera.start();
+                        
+                    });
+                    
+                });
+                
+                return null;
+            }
+            
+        };
+        
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        executorService.submit(webCamIntilizer);
+        
+    }
+    
+    private void checkCheckboxes() {
+        
+        int counter = 0;
+        
+        for (CameraContainer container : this.containers)
+            if (container.getCheckBox().isSelected()) counter ++;
+        
+        this.recordButton.setDisable(counter == 0);
+        
     }
     
     private void initLists() {
-        
-        this.imageViews.addAll(
-                Arrays.asList(
-                        this.webcamIV_0, this.webcamIV_1,
-                        this.webcamIV_2, this.webcamIV_3
-                )
-        );
         
         this.checkBoxes.addAll(
                 Arrays.asList(
@@ -118,8 +181,19 @@ public class RecorderController implements Initializable {
     @FXML
     private void startRecord() {
         
+        this.recordButton.setDisable(true);
+        this.stopButton.setDisable(false);
+        
         containers.forEach((cameraContainer) -> {
-            cameraContainer.getWebcamPanel().start();
+            
+            if (cameraContainer.getCheckBox().isSelected()) {
+                
+                cameraContainer.getCamera().startRecord();
+                
+                cameraContainer.getCheckBox().setDisable(true);
+                
+            }
+            
         });
         
     }
@@ -127,41 +201,34 @@ public class RecorderController implements Initializable {
     @FXML
     private void stopRecord() {
         
+        this.recordButton.setDisable(false);
+        
         containers.forEach((cameraContainer) -> {
-            cameraContainer.getWebcamPanel().stop();
+            
+            cameraContainer.getCamera().stopRecord();
+            
+            cameraContainer.getCheckBox().setDisable(false);
+            
         });
         
     }
     
-    class CameraContainer {
+    @FXML
+    private void openGallery() throws IOException {
         
-        private WebcamPanel webcamPanel;
-        private JFXCheckBox checkBox;
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(
+                "/camerarecorder/dialog/gallery/GalleryFXML.fxml"
+        ));
         
-        CameraContainer() {
-            System.out.println("Default constructor");
-        }
-
-        CameraContainer(WebcamPanel webcamPanel, JFXCheckBox checkBox) {
-            this.checkBox = checkBox;
-            this.webcamPanel = webcamPanel;
-        }
-
-        public JFXCheckBox getCheckBox() {
-            return checkBox;
-        }
-
-        public void setCheckBox(JFXCheckBox checkBox) {
-            this.checkBox = checkBox;
-        }
-
-        public WebcamPanel getWebcamPanel() {
-            return webcamPanel;
-        }
-
-        public void setWebcamPanel(WebcamPanel webcamPanel) {
-            this.webcamPanel = webcamPanel;
-        }
+        Stage stage = new Stage();
+        stage.setScene(new Scene((Pane) loader.load()));
+        
+        stage.setTitle("Galería actual");
+        
+        GalleryController galleryController =
+                loader.<GalleryController>getController();
+        
+        stage.showAndWait();
         
     }
     

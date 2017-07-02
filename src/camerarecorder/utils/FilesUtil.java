@@ -39,7 +39,11 @@ public class FilesUtil {
         }
         
     }
-
+    
+    public File getDirectory() {
+        return new File(this.path);
+    }
+    
     public String getPath() {
         return path;
     }
