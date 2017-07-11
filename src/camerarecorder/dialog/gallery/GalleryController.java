@@ -7,6 +7,7 @@ import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,6 +20,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -31,7 +33,7 @@ public class GalleryController implements Initializable {
     private TableView<Video> videoTV;
     
     @FXML
-    private TableColumn<Video, String> deleteTC;
+    private TableColumn<Video, String> deleteTC, openTC;
     
     private ObservableList<Video> videoList = FXCollections.observableArrayList();
     
@@ -67,6 +69,14 @@ public class GalleryController implements Initializable {
         
         this.deleteTC.setCellFactory(new PropertyValueFactory("delete"));
         
+        this.deleteTC.setCellFactory(this.getCallback("Eliminar"));
+        
+        this.openTC.setCellFactory(this.getCallback("Abrir"));
+        
+    }
+    
+    private Callback<TableColumn<Video, String>, TableCell<Video, String>> getCallback(String type) {
+        
         Callback<TableColumn<Video, String>, TableCell<Video, String>> cellFactory =
                 (TableColumn<Video, String> value) -> {
                     
@@ -75,7 +85,7 @@ public class GalleryController implements Initializable {
                         @Override
                         protected void updateItem(String item, boolean empty) {
                             
-                            Button button = new Button("Eliminar");
+                            Button button = new Button(type);
                             
                             super.updateItem(item, empty);
                             
@@ -97,27 +107,54 @@ public class GalleryController implements Initializable {
                                     
                                     if (file.exists()) {
                                         
-                                        try {
-                                            Desktop.getDesktop().open(file);
+                                        Button btn = (Button) event.getSource();
+                                        
+                                        String operation = btn.getText();
+                                        
+                                        if (operation.equalsIgnoreCase("Abrir")) {
                                             
-//                                        if (file.delete()) {
-//                                            
-//                                            videoList.remove(video);
-//                                            
-//                                            new Alert(
-//                                                    AlertType.INFORMATION,
-//                                                    "El vídeo ha sido removido exitosamente"
-//                                            ).show();
-//                                            
-//                                        } else {
-//                                            
-//                                            new Alert(
-//                                                    AlertType.ERROR,
-//                                                    "El vídeo no ha podido ser eliminado"
-//                                            ).show();
-//                                            
-//                                        }
-                                        } catch (IOException ex) {
+                                            try {
+                                                
+                                                Desktop.getDesktop().open(file);
+                                                
+                                            } catch (IOException ex) {
+                                                
+                                                System.out.println("Error al abrir el archivo");
+                                                
+                                            }
+                                            
+                                        } else if (operation.equalsIgnoreCase("Eliminar")) {
+                                            
+                                            Optional<ButtonType> confirmation = new Alert(
+                                                    AlertType.CONFIRMATION,
+                                                    "¿Está seguro(a) de eliminar el vídeo?"
+                                            ).showAndWait();
+                                            
+                                            if (confirmation.isPresent()) {
+                                                
+                                                if (confirmation.get() == ButtonType.OK) {
+                                                    
+                                                    if (file.delete()) {
+                                                        
+                                                        videoList.remove(video);
+                                                        
+                                                        new Alert(
+                                                                AlertType.INFORMATION,
+                                                                "El vídeo ha sido removido exitosamente"
+                                                        ).show();
+                                                        
+                                                    } else {
+                                                        
+                                                        new Alert(
+                                                                AlertType.ERROR,
+                                                                "El vídeo no ha podido ser eliminado"
+                                                        ).show();
+                                                        
+                                                    }
+                                                    
+                                                }
+                                                
+                                            }
                                             
                                         }
                                         
@@ -141,7 +178,7 @@ public class GalleryController implements Initializable {
                     
                 };
         
-        this.deleteTC.setCellFactory(cellFactory);
+        return cellFactory;
         
     }
     

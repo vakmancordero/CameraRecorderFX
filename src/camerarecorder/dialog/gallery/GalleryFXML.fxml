@@ -10,9 +10,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.cell.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="590.0" prefWidth="967.0" style="-fx-background-color: WHITE;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="camerarecorder.dialog.gallery.GalleryController">
+<AnchorPane id="AnchorPane" prefHeight="612.0" prefWidth="1100.0" style="-fx-background-color: WHITE;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="camerarecorder.dialog.gallery.GalleryController">
     <children>
-        <SplitPane dividerPositions="0.6793650793650794" layoutX="178.0" layoutY="120.0" prefHeight="351.0" prefWidth="580.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="35.0">
+        <SplitPane dividerPositions="0.7189239332096475" layoutX="178.0" layoutY="120.0" prefHeight="351.0" prefWidth="580.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="35.0">
             <items>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: WHITE;">
                     <children>
@@ -38,7 +38,8 @@
                                         <PropertyValueFactory property="format" />
                                     </cellValueFactory>
                                 </TableColumn>
-                                <TableColumn prefWidth="96.0" fx:id="deleteTC" text="Eliminar" />
+                        <TableColumn fx:id="openTC" prefWidth="96.0" text="Abrir" />
+                                <TableColumn fx:id="deleteTC" prefWidth="96.0" text="Eliminar" />
                             </columns>
                         </TableView>
                         <Label alignment="CENTER" layoutX="52.0" layoutY="15.0" prefHeight="49.0" prefWidth="639.0" text="--- Tabla de vídeos realizados ---" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
